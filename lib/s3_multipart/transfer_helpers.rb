@@ -5,7 +5,7 @@ module S3Multipart
   module TransferHelpers
 
     def initiate(options)
-      url = "/#{unique_name(options)}?uploads"
+      url = "/multipart-uploads/#{unique_name(options)}?uploads"
 
       headers = {content_type: options[:content_type]}
       headers.merge!(options[:headers]) if options.key?(:headers)

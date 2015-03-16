@@ -2,6 +2,7 @@ module S3Multipart
   class UploadsController < ApplicationController
 
     def create
+      authorize Upload.new
       begin
         upload = Upload.create(params)
         upload.execute_callback(:begin, session)
@@ -17,6 +18,7 @@ module S3Multipart
     end
 
     def update
+      authorize Upload.new
       return complete_upload if params[:parts]
       return sign_batch if params[:content_lengths]
       return sign_part if params[:content_length]
