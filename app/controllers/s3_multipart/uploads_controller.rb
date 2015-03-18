@@ -54,10 +54,10 @@ module S3Multipart
           upload = Upload.find_by_upload_id(params[:upload_id])
           upload.update_attributes(location: response[:location])
           upload.execute_callback(:complete, session)
-        rescue => e
-          logger.error "EXC: #{e.message}"
-          response = {error: t("s3_multipart.errors.complete")}
-        ensure
+        #rescue => e
+        #  logger.error "EXC: #{e.message}"
+        #  response = {error: t("s3_multipart.errors.complete")}
+        #ensure
           render :json => response
         end
       end
