@@ -1,4 +1,9 @@
-Michael Keenan's edit to S3 Multipart: added Pundit authorization to uploads_controller, passed data-context and removed buttons in form_helper.rb, changed the upload location in transfer_helpers.rb, fixed the NaN bug in lib.js
+Michael Keenan's edit to S3 Multipart: 
+* added Pundit authorization to uploads_controller (likely to break anyone else's project
+* passed data-context and removed buttons in form_helper.rb
+* changed the upload location in transfer_helpers.rb
+* fixed the NaN bug in s3mp startProgressTimer
+* moved part-signing from initialization to activation, so long-running requests don't get RequestTimeTooSkewed errors
 
 # S3 Multipart
 [![Gem Version](https://badge.fury.io/rb/s3_multipart.svg)](http://badge.fury.io/rb/s3_multipart)
