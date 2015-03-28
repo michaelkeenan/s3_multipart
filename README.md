@@ -1,5 +1,5 @@
 Michael Keenan's edit to S3 Multipart: 
-* added Pundit authorization to uploads_controller (likely to break anyone else's project
+* added Pundit authorization to uploads_controller (likely to break anyone else's project)
 * passed data-context and removed buttons in form_helper.rb
 * changed the upload location in transfer_helpers.rb
 * fixed the NaN bug in s3mp startProgressTimer
