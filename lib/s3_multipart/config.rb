@@ -13,7 +13,7 @@ module S3Multipart
     def self.check_for_breaking_changes
       version = S3Multipart::VERSION
       if self.instance.revision != version
-        raise ArgumentError, "Breaking changes were made to the S3_Multipart gem:\n #{BREAKING_CHANGES[version.to_sym]}\n See the Readme for additional information."
+        raise ArgumentError, "Breaking changes were made to the S3_Multipart gem:\n Version: #{version}\nRevision: #{self.instance.revision}\n#{BREAKING_CHANGES[version.to_sym]} \n See the Readme for additional information."
       end
     end
   end
