@@ -56,6 +56,8 @@ function Upload(file, o, key) {
       this.parts.pop(); // Remove the empty blob at the end of the array
     }
 
+    this.num_parts = this.parts.length;
+
     // init function will initiate the multipart upload, sign all the parts, and
     // start uploading some parts in parallel
     this.init = function() {

@@ -122,13 +122,31 @@ function S3MP(options) {
           });
 
           percent = done/size * 100;
-          
+
+          /*
           // for some reason, done can get a lot bigger than size. For large files (like 5 GB), at least in the test I just did,
           // it got to 60% bigger. A smaller file, 200 MB, got to 30% bigger. Files under 50 MB seem to behave sensibly.
           // My best guess is that this is something to do with dropped packets or something, so this could be way different 
           // for different internet connections. But for now I'm just going to adjust percent by 1.6 so hopefully it'll either be
           // accurate or it'll pleasantly surprise people. Ugh.
           percent /= 1.6;
+          */
+
+          // WAIT A MINUTE. We know which part we've just completed, right? And we know how many parts there are. So get
+          // your percent progress from that.
+
+          percent = (upload.num_parts - upload.parts.length)/upload.num_parts * 100;
+
+          // This part smooths the progress for the first few seconds of the download, so the user doesn't think nothing is happening
+          var old_percent = done/size * 100;
+          var minimum_increment = 100 / upload.num_parts;
+          if (percent < minimum_increment) {
+            if (old_percent < minimum_increment) {
+              percent = old_percent;
+            } else {
+              percent = minimum_increment;
+            }
+          }
 
           speed = done - last_upload_chunk[key];
           last_upload_chunk[key] = done;
