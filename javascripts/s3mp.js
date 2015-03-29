@@ -122,6 +122,14 @@ function S3MP(options) {
           });
 
           percent = done/size * 100;
+          
+          // for some reason, done can get a lot bigger than size. For large files (like 5 GB), at least in the test I just did,
+          // it got to 60% bigger. A smaller file, 200 MB, got to 30% bigger. Files under 50 MB seem to behave sensibly.
+          // My best guess is that this is something to do with dropped packets or something, so this could be way different 
+          // for different internet connections. But for now I'm just going to adjust percent by 1.6 so hopefully it'll either be
+          // accurate or it'll pleasantly surprise people. Ugh.
+          percent /= 1.6;
+
           speed = done - last_upload_chunk[key];
           last_upload_chunk[key] = done;
 
@@ -205,16 +213,25 @@ S3MP.prototype.signPartRequest = function(id, object_name, upload_id, part, cb) 
 
 S3MP.prototype.completeMultipart = function(uploadObj, cb) {
   var url, body, xhr;
+  var attempts_remaining = 3;
 
-  url = '/s3_multipart/uploads/'+uploadObj.id;
-  body = JSON.stringify({ object_name    : uploadObj.object_name,
-                          upload_id      : uploadObj.upload_id,
-                          content_length : uploadObj.size,
-                          parts          : uploadObj.Etags
-                        });
+  while(true) {
+    try {
+      url = '/s3_multipart/uploads/'+uploadObj.id;
+      body = JSON.stringify({ object_name    : uploadObj.object_name,
+                              upload_id      : uploadObj.upload_id,
+                              content_length : uploadObj.size,
+                              parts          : uploadObj.Etags
+                            });
 
-  xhr = this.createXhrRequest('PUT', url);
-  this.deliverRequest(xhr, body, cb);
+      xhr = this.createXhrRequest('PUT', url);
+      this.deliverRequest(xhr, body, cb);
+      return;
+    } catch (e) {
+        // handle exception
+        if (--attempts_remaining < 1) throw e;
+    }
+  }
 };
 
 // Specify callbacks, request body, and settings for requests that contact
