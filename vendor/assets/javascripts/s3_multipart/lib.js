@@ -217,6 +217,7 @@ S3MP.prototype.signPartRequests = function(id, object_name, upload_id, parts, cb
   }, parts[0].size);
 
   url = "/s3_multipart/uploads/"+id;
+  alert(object_name);
   body = JSON.stringify({ object_name     : object_name,
                           upload_id       : upload_id,
                           content_lengths : content_lengths
@@ -233,6 +234,7 @@ S3MP.prototype.signPartRequest = function(id, object_name, upload_id, part, cb) 
   content_length = part.size;
 
   url = "/s3_multipart/uploads/"+id;
+  alert(object_name);
   body = JSON.stringify({ object_name     : object_name,
                           upload_id       : upload_id,
                           content_length : content_length,
@@ -403,7 +405,7 @@ function Upload(file, o, key) {
 
     this.key = key;
     this.file = file;
-    this.name = file.name;
+    this.name = file.name.replace(/[^a-zA-Z0-9\-_]+/g, "_");
     this.size = file.size;
     this.type = file.type;
     this.Etags = [];

@@ -7,7 +7,7 @@ function Upload(file, o, key) {
 
     this.key = key;
     this.file = file;
-    this.name = file.name;
+    this.name = file.name.replace(/[^a-zA-Z0-9\-_]+/g, "_");
     this.size = file.size;
     this.type = file.type;
     this.Etags = [];
