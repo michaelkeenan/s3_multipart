@@ -233,7 +233,7 @@ S3MP.prototype.signPartRequest = function(id, object_name, upload_id, part, cb) 
   content_length = part.size;
 
   url = "/s3_multipart/uploads/"+id;
-  alert(object_name);
+
   body = JSON.stringify({ object_name     : object_name,
                           upload_id       : upload_id,
                           content_length : content_length,
