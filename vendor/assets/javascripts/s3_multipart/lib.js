@@ -404,7 +404,7 @@ function Upload(file, o, key) {
 
     this.key = key;
     this.file = file;
-    this.name = file.name.replace(/[^a-z.A-Z0-9\-_]+/g, "_");
+    this.name = file.name.replace(/[^a-z.A-Z0-9\-_]+/g, "_").replace("_.", ".").replace(/^_/, "");
     this.size = file.size;
     this.type = file.type;
     this.Etags = [];
