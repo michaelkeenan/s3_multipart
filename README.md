@@ -4,6 +4,8 @@ Michael Keenan's edit to S3 Multipart:
 * changed the upload location in transfer_helpers.rb
 * fixed the NaN bug in s3mp startProgressTimer
 * moved part-signing from initialization to activation, so long-running requests don't get RequestTimeTooSkewed errors
+* added filename sanitizing so most special characters are replaced with underscores
+* altered the way the percentage complete is calculated
 
 # S3 Multipart
 [![Gem Version](https://badge.fury.io/rb/s3_multipart.svg)](http://badge.fury.io/rb/s3_multipart)
