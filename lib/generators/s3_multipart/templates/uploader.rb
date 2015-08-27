@@ -1,4 +1,4 @@
-class <%= model_constant %>Uploader < ApplicationController
+class <%= model_constant %>Uploader < ActionController::Base
   extend S3Multipart::Uploader::Core
 
   # Attaches the specified model to the uploader, creating a "has_one" 
